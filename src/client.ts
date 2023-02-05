@@ -1,4 +1,4 @@
-import { Client, Routes } from "oceanic.js";
+import { Client, Routes, CommandInteraction } from "oceanic.js";
 import { EventOptions, CommandOptions } from "./types";
 
 export class SplashpadClient extends Client {
@@ -6,14 +6,28 @@ export class SplashpadClient extends Client {
     commands: CommandOptions[] = [];
 
     async syncCommands() {
-        let stripped = this.stripCommands();
-        await this.rest.authRequest({ method: "PUT", headers: { 'Content-Type': 'application/json' }, json: stripped, path: Routes.APPLICATION_COMMANDS(this.user.id) });
+        await this.rest.authRequest({ method: "PUT", headers: { 'Content-Type': 'application/json' }, json: this.commands, path: Routes.APPLICATION_COMMANDS(this.user.id) });
     }
 
     async initialize() {
         this.eventListen();
         this.connect();
         this.on('ready', async () => { await this.syncCommands() });
+        this.on('interactionCreate', async (interaction) => {
+            if(interaction instanceof CommandInteraction) {
+                let name = interaction.data.name
+                await this.handleCommand(name, interaction);
+            }
+        });
+    }
+
+    async handleCommand(commandName: String, interaction: CommandInteraction) {
+        const cmd = this.commands.find(c => c.name == commandName);
+        if(!cmd) {
+            await interaction.createMessage({content: "Command not found."});
+            return;
+        }
+        await cmd.run(interaction);
     }
 
     addCommand(command: CommandOptions) {
@@ -22,17 +36,6 @@ export class SplashpadClient extends Client {
 
     subscribe(event: EventOptions) {
         this.events.push(event);
-    }
-
-    stripCommands(): any[] {
-        let stripped = [];
-        for (let command of this.commands) {
-            let nc = command;
-            delete nc.run;
-            stripped.push(nc);
-        }
-
-        return stripped;
     }
 
     private eventListen() {
