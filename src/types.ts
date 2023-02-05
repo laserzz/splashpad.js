@@ -1,4 +1,4 @@
-import { ApplicationCommandTypes, LocaleMap, ClientEvents } from "oceanic.js";
+import { ApplicationCommandTypes, LocaleMap, ClientEvents, CommandInteraction } from "oceanic.js";
 
 export interface CommandOptions {
     name: string;
@@ -10,7 +10,7 @@ export interface CommandOptions {
     default_member_permissions?: string;
     dm_permission?: boolean;
     nsfw?: boolean;
-    run: Function;
+    run?: Function;
 }
 
 export interface CommandOptionOptions {

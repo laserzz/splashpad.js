@@ -15,7 +15,7 @@ export class SplashpadClient extends Client {
         this.on('ready', async () => { await this.syncCommands() });
         this.on('interactionCreate', async (interaction) => {
             if(interaction instanceof CommandInteraction) {
-                let name = interaction.data.name
+                let name = interaction.data.name;
                 await this.handleCommand(name, interaction);
             }
         });
@@ -23,6 +23,13 @@ export class SplashpadClient extends Client {
 
     async handleCommand(commandName: String, interaction: CommandInteraction) {
         const cmd = this.commands.find(c => c.name == commandName);
+        if(interaction.data.options.raw) {
+            if(interaction.data.options.raw[0].type == 1) {
+                const subcmd = cmd.options.find(o => o.name == interaction.data.options.raw[0].name);
+                await subcmd.run(interaction);
+                return;
+            }
+        }
         if(!cmd) {
             await interaction.createMessage({content: "Command not found."});
             return;
@@ -32,6 +39,19 @@ export class SplashpadClient extends Client {
 
     addCommand(command: CommandOptions) {
         this.commands.push(command);
+    }
+
+    addSubCommand(command: CommandOptions, parentCommandName: string) {
+        try {
+            let cmd = this.commands.find(c => c.name == parentCommandName);
+            if(!cmd.options) {
+                cmd.options = [command];
+            } else {
+                cmd.options.push(command);
+            }
+        } catch (e) {
+            throw new Error("No parent command found by that name.");
+        }
     }
 
     subscribe(event: EventOptions) {
