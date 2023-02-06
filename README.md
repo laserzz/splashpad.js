@@ -1,6 +1,6 @@
 # splashpad.js
 
-**A lightweight command framework for oceanic.js.**
+**A lightweight command framework for Oceanic.**
 
 #### Quick Example
 
@@ -17,6 +17,9 @@ bot.subscribe({
 bot.initialize();
 ```
 
+More examples can be found in the [examples](https://github.com/laserzz/splashpad.js/tree/master/examples) folder.
+
 #### Resources
 
+[NPM Package](https://www.npmjs.com/package/splashpad.js)\
 [Oceanic](https://github.com/OceanicJS/Oceanic)
