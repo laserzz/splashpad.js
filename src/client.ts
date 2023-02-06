@@ -37,10 +37,17 @@ export class SplashpadClient extends Client {
         await cmd.run(interaction);
     }
 
+    /**
+     * @param command {CommandOptions} Command Object to add.
+     */
     addCommand(command: CommandOptions) {
         this.commands.push(command);
     }
 
+    /**
+     * @param command {CommandOptions} Command Object to add.
+     * @param parentCommandName {string} Name of the parent command.
+     */
     addSubCommand(command: CommandOptions, parentCommandName: string) {
         try {
             let cmd = this.commands.find(c => c.name == parentCommandName);
@@ -54,6 +61,10 @@ export class SplashpadClient extends Client {
         }
     }
 
+    /**
+     * 
+     * @param event {EventOptions} Event to listen for.
+     */
     subscribe(event: EventOptions) {
         this.events.push(event);
     }
