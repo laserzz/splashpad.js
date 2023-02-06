@@ -13,7 +13,7 @@ bot.addSubCommand({
     description: 'child command',
     type: 1,
     run: async (interaction) => {
-        await interaction.createMessage({content: `child command, ${interaction.data.options.getString('thing')}`});
+        await interaction.createMessage({content: `child command!`});
     }
 }, 'parent');
 
