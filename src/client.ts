@@ -1,9 +1,10 @@
-import { Client, Routes, CommandInteraction } from "oceanic.js";
-import { EventOptions, CommandOptions } from "./types";
+import { Client, Routes, CommandInteraction, ComponentInteraction } from "oceanic.js";
+import { EventOptions, CommandOptions, ComponentCommandOptions } from "./types";
 
 export class SplashpadClient extends Client {
     events: EventOptions[] = [];
     commands: CommandOptions[] = [];
+    componentCommands: ComponentCommandOptions[] = [];
 
     async syncCommands() {
         await this.rest.authRequest({ method: "PUT", headers: { 'Content-Type': 'application/json' }, json: this.commands, path: Routes.APPLICATION_COMMANDS(this.user.id) });
@@ -23,6 +24,10 @@ export class SplashpadClient extends Client {
 
     async handleCommand(commandName: String, interaction: CommandInteraction) {
         const cmd = this.commands.find(c => c.name == commandName);
+        if(!cmd) {
+            await interaction.createMessage({content: "Command not found."});
+            return;
+        }
         if(interaction.data.options.raw) {
             if(interaction.data.options.raw[0].type == 1) {
                 const subcmd = cmd.options.find(o => o.name == interaction.data.options.raw[0].name);
@@ -30,6 +35,11 @@ export class SplashpadClient extends Client {
                 return;
             }
         }
+        await cmd.run(interaction);
+    }
+
+    async handleComponentCommand(interaction: ComponentInteraction) {
+        const cmd = this.componentCommands.find(c => c.customID == interaction.customID);
         if(!cmd) {
             await interaction.createMessage({content: "Command not found."});
             return;
@@ -59,6 +69,10 @@ export class SplashpadClient extends Client {
         } catch (e) {
             throw new Error("No parent command found by that name.");
         }
+    }
+
+    addComponentCommand(command) {
+        this.componentCommands.push(command);
     }
 
     /**

@@ -13,6 +13,11 @@ export interface CommandOptions {
     run?: Function;
 }
 
+export interface ComponentCommandOptions {
+    customID: string;
+    run: Function;
+}
+
 export interface CommandOptionOptions {
     name: string;
     name_localizations?: any;
