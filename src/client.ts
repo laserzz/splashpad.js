@@ -11,7 +11,7 @@ export class SplashpadClient extends Client {
     }
 
     /*
-    * Connects the bot and sets up listeners. Use this instead of the connect() method, else unexpected behaviour will occur.
+    * @description Connects the bot and sets up listeners. Use this instead of the connect() method, else unexpected behaviour will occur.
     */
     async initialize() {
         this.eventListen();
@@ -56,7 +56,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * Adds a command to the list.
+     * @description Adds a command to the list.
      * @param command {CommandOptions} Command Object to add.
      */
     addCommand(command: CommandOptions) {
@@ -64,7 +64,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * Adds a subcommand to a parent command.
+     * @description Adds a subcommand to a parent command.
      * @param command {CommandOptions} Command Object to add.
      * @param parentCommandName {string} Name of the parent command.
      */
@@ -82,7 +82,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * Adds a callback for a specific component.
+     * @description Adds a callback for a specific component.
      * @param command {CommandOptions} Command Object to add.
      */
     addComponentCommand(command: ComponentCommandOptions) {
@@ -90,7 +90,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * Sets an event to listen for, with a callback.
+     * @description Sets an event to listen for, with a callback.
      * @param event {EventOptions} Event to listen for.
      */
     subscribe(event: EventOptions) {
