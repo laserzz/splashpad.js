@@ -89,6 +89,10 @@ export class SplashpadClient extends Client {
         this.componentCommands.push(command);
     }
 
+    addCommandDir(path: string) {
+        // todo
+    }
+
     /**
      * @description Sets an event to listen for, with a callback.
      * @param event {EventOptions} Event to listen for.
