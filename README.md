@@ -22,4 +22,5 @@ More examples can be found in the [examples](https://github.com/laserzz/splashpa
 #### Resources
 
 [NPM Package](https://www.npmjs.com/package/splashpad.js)\
-[Oceanic](https://github.com/OceanicJS/Oceanic)
+[Oceanic](https://github.com/OceanicJS/Oceanic)\
+[Source](https://github.com/laserzz/splashpad.js)

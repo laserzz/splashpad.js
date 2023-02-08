@@ -1,31 +1,39 @@
-import { ApplicationCommandTypes, LocaleMap, ClientEvents, CommandInteraction } from "oceanic.js";
+import { 
+    ApplicationCommandTypes, 
+    LocaleMap, 
+    ClientEvents, 
+    CommandInteraction, 
+    ApplicationCommandOptionTypes,
+    ComponentInteraction
+} from "oceanic.js";
 
 export interface CommandOptions {
     name: string;
     name_localizations?: any;
     description: string;
     description_localizations?: any;
-    type: typeof ApplicationCommandTypes;
+    type: ApplicationCommandTypes;
     options: CommandOptionOptions[];
     default_member_permissions?: string;
     dm_permission?: boolean;
     nsfw?: boolean;
-    run?: Function;
+    run?: (interaction: CommandInteraction) => Promise<any>;
 }
 
 export interface ComponentCommandOptions {
     customID: string;
-    run: Function;
+    run: (interaction: ComponentInteraction) => Promise<any>;
 }
 
 export interface CommandOptionOptions {
     name: string;
     name_localizations?: any;
+    type: ApplicationCommandOptionTypes;
     description: string;
     description_localizations?: any;
     required?: boolean;
     choices?: CommandChoiceOptions[];
-    run?: Function;
+    run?: (interaction: CommandInteraction) => Promise<any>;
 }
 
 interface CommandChoiceOptions {
@@ -36,5 +44,5 @@ interface CommandChoiceOptions {
 
 export interface EventOptions {
     name: keyof ClientEvents;
-    run: Function;
+    run: Function
 }
