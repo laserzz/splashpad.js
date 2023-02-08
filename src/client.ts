@@ -1,5 +1,6 @@
-import { Client, Routes, CommandInteraction, ComponentInteraction, ClientEvents } from "oceanic.js";
+import { Client, Routes, CommandInteraction, ComponentInteraction } from "oceanic.js";
 import { EventOptions, CommandOptions, CommandOptionOptions, ComponentCommandOptions } from "./types";
+import fs from 'fs';
 
 export class SplashpadClient extends Client {
     events: EventOptions[] = [];
@@ -10,8 +11,8 @@ export class SplashpadClient extends Client {
         await this.rest.authRequest({ method: "PUT", headers: { 'Content-Type': 'application/json' }, json: this.commands, path: Routes.APPLICATION_COMMANDS(this.user.id) });
     }
 
-    /*
-    * @description Connects the bot and sets up listeners. Use this instead of the connect() method, else unexpected behaviour will occur.
+    /**
+    * Connects the bot and sets up listeners. Use this instead of the connect() method, else unexpected behaviour will occur.
     */
     async initialize() {
         this.eventListen();
@@ -56,7 +57,8 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * @description Adds a command to the list.
+     * Adds a command to the list.
+     * 
      * @param command {CommandOptions} Command Object to add.
      */
     addCommand(command: CommandOptions) {
@@ -64,7 +66,8 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * @description Adds a subcommand to a parent command.
+     * Adds a subcommand to a parent command.
+     * 
      * @param command {CommandOptions} Command Object to add.
      * @param parentCommandName {string} Name of the parent command.
      */
@@ -82,19 +85,43 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * @description Adds a callback for a specific component.
+     * Adds a callback for a specific component.
+     * 
      * @param command {CommandOptions} Command Object to add.
      */
     addComponentCommand(command: ComponentCommandOptions) {
         this.componentCommands.push(command);
     }
 
-    addCommandDir(path: string) {
-        // todo
+    /**
+     * Allows you to add commands in bulk if you would prefer to.
+     * 
+     * @param commands {CommandOptions[]} Commands to add.
+     */
+    bulkAddCommands(commands: CommandOptions[]) {
+        for(const c of commands) {
+            this.addCommand(c);
+        }
     }
 
     /**
-     * @description Sets an event to listen for, with a callback.
+     * automates the creation of multiple commands via multiple files.\
+     * The CommandOptions Object must be the default export for this function to work.
+     * 
+     * @param path {string} path to search for files.
+     */
+    addCommandDir(path: string) {
+        const files = fs.readdirSync(path);
+        for(const f of files) {
+            const cmd: CommandOptions = require(f);
+            this.addCommand(cmd);
+        }
+    }
+
+    /**
+     * Sets an event to listen for, with a callback.\
+     * Alternatively, you can use the default listener function with on().
+     * 
      * @param event {EventOptions} Event to listen for.
      */
     subscribe(event: EventOptions) {
