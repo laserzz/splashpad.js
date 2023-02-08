@@ -1,6 +1,6 @@
 {
   "name": "splashpad.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "a command framework for Oceanic.",
   "main": "dist/lib/index.js",
   "scripts": {

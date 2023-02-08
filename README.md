@@ -23,4 +23,5 @@ More examples can be found in the [examples](https://github.com/laserzz/splashpa
 
 [NPM Package](https://www.npmjs.com/package/splashpad.js)\
 [Oceanic](https://github.com/OceanicJS/Oceanic)\
-[Source](https://github.com/laserzz/splashpad.js)
+[Source](https://github.com/laserzz/splashpad.js)\
+[Discord Server](https://discord.gg/Afw5XYpf8k)

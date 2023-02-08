@@ -10,6 +10,9 @@ export class SplashpadClient extends Client {
         await this.rest.authRequest({ method: "PUT", headers: { 'Content-Type': 'application/json' }, json: this.commands, path: Routes.APPLICATION_COMMANDS(this.user.id) });
     }
 
+    /*
+    * Connects the bot and sets up listeners. Use this instead of the connect() method, else unexpected behaviour will occur.
+    */
     async initialize() {
         this.eventListen();
         this.connect();
@@ -53,6 +56,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
+     * Adds a command to the list.
      * @param command {CommandOptions} Command Object to add.
      */
     addCommand(command: CommandOptions) {
@@ -60,6 +64,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
+     * Adds a subcommand to a parent command.
      * @param command {CommandOptions} Command Object to add.
      * @param parentCommandName {string} Name of the parent command.
      */
@@ -77,6 +82,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
+     * Adds a callback for a specific component.
      * @param command {CommandOptions} Command Object to add.
      */
     addComponentCommand(command: ComponentCommandOptions) {
@@ -84,7 +90,7 @@ export class SplashpadClient extends Client {
     }
 
     /**
-     * 
+     * Sets an event to listen for, with a callback.
      * @param event {EventOptions} Event to listen for.
      */
     subscribe(event: EventOptions) {
