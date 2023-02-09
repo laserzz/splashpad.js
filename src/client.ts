@@ -1,6 +1,7 @@
 import { Client, Routes, CommandInteraction, ComponentInteraction } from "oceanic.js";
 import { EventOptions, CommandOptions, CommandOptionOptions, ComponentCommandOptions } from "./types";
 import fs from 'fs';
+import path from 'path';
 
 export class SplashpadClient extends Client {
     events: EventOptions[] = [];
@@ -110,10 +111,13 @@ export class SplashpadClient extends Client {
      * 
      * @param path {string} path to search for files.
      */
-    addCommandDir(path: string) {
-        const files = fs.readdirSync(path);
+    addCommandDir(filePath: string) {
+        const files = fs.readdirSync(filePath);
         for(const f of files) {
-            const cmd: CommandOptions = require(f);
+            if(f == path.basename(__filename)) {
+                continue;
+            }
+            const cmd: CommandOptions = require(`${filePath}/${f}`);
             this.addCommand(cmd);
         }
     }
