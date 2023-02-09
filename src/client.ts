@@ -1,4 +1,4 @@
-import { Client, Routes, CommandInteraction, ComponentInteraction } from "oceanic.js";
+import { Client, Routes, CommandInteraction, ComponentInteraction, ApplicationCommandTypes } from "oceanic.js";
 import { EventOptions, CommandOptions, CommandOptionOptions, ComponentCommandOptions } from "./types";
 import fs from 'fs';
 import path from 'path';
@@ -135,18 +135,19 @@ export class SplashpadClient extends Client {
                     for(const sc of c.options) {
                         helpStr += `**${c.name} ${sc.name}** - ${sc.description}\n`;
                     }
+                    continue;
                 }
             }
-            helpStr += `**${c.name}** - ${c.description}`;
+            helpStr += `**${c.name}** - ${c.description}\n`;
         }
         let embed = {
-            title: `Commands for ${this.user.tag}`,
+            title: `Commands`,
             description: helpStr
         }
         this.addCommand({
             name: 'help',
             description: 'help commands',
-            type: 1,
+            type: ApplicationCommandTypes.CHAT_INPUT,
             run: async (interaction) => {
                 await interaction.createMessage({embeds: [embed]});
             }

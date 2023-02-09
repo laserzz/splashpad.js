@@ -13,7 +13,7 @@ export interface CommandOptions {
     description: string;
     description_localizations?: any;
     type: ApplicationCommandTypes;
-    options: CommandOptionOptions[];
+    options?: CommandOptionOptions[];
     default_member_permissions?: string;
     dm_permission?: boolean;
     nsfw?: boolean;
