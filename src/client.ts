@@ -71,6 +71,8 @@ export class SplashpadClient extends Client {
      * 
      * @param command {CommandOptions} Command Object to add.
      * @param parentCommandName {string} Name of the parent command.
+     * 
+     * @throws {Error} If the parent command does not exist.
      */
     addSubCommand(command: CommandOptionOptions, parentCommandName: string) {
         try {
