@@ -125,6 +125,35 @@ export class SplashpadClient extends Client {
     }
 
     /**
+     * Automates the creation of a help command.
+     */
+    helpCommand() {
+        let helpStr = "";
+        for(const c of this.commands) {
+            if(c.options) {
+                if(c.options[0].type == 1) {
+                    for(const sc of c.options) {
+                        helpStr += `**${c.name} ${sc.name}** - ${sc.description}\n`;
+                    }
+                }
+            }
+            helpStr += `**${c.name}** - ${c.description}`;
+        }
+        let embed = {
+            title: `Commands for ${this.user.tag}`,
+            description: helpStr
+        }
+        this.addCommand({
+            name: 'help',
+            description: 'help commands',
+            type: 1,
+            run: async (interaction) => {
+                await interaction.createMessage({embeds: [embed]});
+            }
+        });
+    }
+
+    /**
      * Sets an event to listen for, with a callback.\
      * Alternatively, you can use the default listener function with on().
      * 
