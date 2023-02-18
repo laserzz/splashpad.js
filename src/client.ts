@@ -32,6 +32,9 @@ export class SplashpadClient extends Client {
         });
     }
 
+    /**
+     * Used internally; Highly recommended you don't call this method.
+     */
     async handleCommand(commandName: String, interaction: CommandInteraction) {
         const cmd = this.commands.find(c => c.name == commandName);
         if(!cmd) {
@@ -48,6 +51,9 @@ export class SplashpadClient extends Client {
         await cmd.run(interaction);
     }
 
+    /**
+     * Used internally; Highly recommended you don't call this method.
+     */
     async handleComponentCommand(interaction: ComponentInteraction) {
         const cmd = this.componentCommands.find(c => c.customID == interaction.data.customID);
         if(!cmd) {
@@ -164,6 +170,26 @@ export class SplashpadClient extends Client {
         this.events.push(event);
     }
 
+    /**
+     * automates the creation of event callbacks via multiple files.\
+     * the default file export must be an EventOptions object for this to work.
+     * 
+     * @param filePath path to search for files.
+     */
+    addEventDir(filePath: string) {
+        const files = fs.readdirSync(filePath);
+        for(const f of files) {
+            if(f == path.basename(__filename)) {
+                continue;
+            }
+            const event: EventOptions = require(`${filePath}/${f}`);
+            this.subscribe(event);
+        }
+    }
+
+    /**
+     * Used internally; Highly recommended you don't call this method.
+     */
     private eventListen() {
         try {
             for (const e of this.events) {
