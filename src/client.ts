@@ -182,7 +182,10 @@ export class SplashpadClient extends Client {
             if(f == path.basename(__filename)) {
                 continue;
             }
-            const event: EventOptions = require(`${filePath}/${f}`);
+            let event = require(`${filePath}/${f}`);
+            if(event.default) {
+                event = {name: event.default.name, run: event.default.run};
+            }
             this.subscribe(event);
         }
     }
