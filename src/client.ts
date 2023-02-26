@@ -125,7 +125,10 @@ export class SplashpadClient extends Client {
             if(f == path.basename(__filename)) {
                 continue;
             }
-            const cmd: CommandOptions = require(`${filePath}/${f}`);
+            let cmd = require(`${filePath}/${f}`);
+            if(cmd.default) {
+                cmd = cmd.default;
+            }
             this.addCommand(cmd);
         }
     }
